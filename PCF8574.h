@@ -6,10 +6,6 @@
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_i2c.h"
 
-
-/*
- * 	HANDLE_I2C is the address of the I2C_HandleTypeDef structure.
- */
 extern I2C_HandleTypeDef hi2c1;		// Configure according to your I2C_HandleTypeDef structure address.
 
 
@@ -18,8 +14,8 @@ extern I2C_HandleTypeDef hi2c1;		// Configure according to your I2C_HandleTypeDe
  *  				write configuration:	0 1 0 0  1    1    1    0 = 0x4E
  *  				read  configuration:	0 1 0 0  1    1    1    1 = 0x4F
  */
-#define DEVICE_ADDRESS_WRITE	(uint16_t)0x4E	// Configure according to your selection.
-#define DEVICE_ADDRESS_READ 	(uint16_t)0x4F	// Configure according to your selection.
+#define DEVICE_ADDRESS_WRITE	(uint16_t)0x4E	// Configure according to your slave address selection.
+#define DEVICE_ADDRESS_READ 	(uint16_t)0x4F	// Configure according to your slave address selection.
 
 #define MAX_PIN_NUMBER (uint8_t)0x07
 
