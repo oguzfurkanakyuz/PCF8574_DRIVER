@@ -36,14 +36,14 @@ typedef enum
 /*
  * 	@def_group Expander_Output_Pins
  */
-#define P0	( (uint8_t) 0X01 )
-#define P1	( (uint8_t) 0X02 )
-#define P2	( (uint8_t) 0X04 )
-#define P3	( (uint8_t) 0X08 )
-#define P4	( (uint8_t) 0X10 )
-#define P5	( (uint8_t) 0X20 )
-#define P6	( (uint8_t) 0X40 )
-#define P7	( (uint8_t) 0X80 )
+#define P0_OUT	( (uint8_t) 0X01 )
+#define P1_OUT	( (uint8_t) 0X02 )
+#define P2_OUT	( (uint8_t) 0X04 )
+#define P3_OUT	( (uint8_t) 0X08 )
+#define P4_OUT	( (uint8_t) 0X10 )
+#define P5_OUT	( (uint8_t) 0X20 )
+#define P6_OUT	( (uint8_t) 0X40 )
+#define P7_OUT	( (uint8_t) 0X80 )
 
 void Expander_Write_Pin(uint8_t PinNumber,Expander_PinState_t Expander_State);
 void Expander_Toggle_Pin(uint8_t PinNumber);

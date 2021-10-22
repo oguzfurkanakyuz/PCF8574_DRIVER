@@ -61,8 +61,8 @@ void Expander_Write_Pin(uint8_t PinNumber,Expander_PinState_t Expander_State)
   * @brief  Expander_Read_Pin() returns the existing state of desired pin.
   *
   * @return This parameter can be one of the Expander_PinState_t enum values:
-  *            @arg EXPANDER_PIN_RESET: to clear the port pin.
-  *            @arg EXPANDER_PIN_SET  : to set the port pin.
+  *            @arg EXPANDER_PIN_RESET: if pin is LOW state.
+  *            @arg EXPANDER_PIN_SET  : if pin is HIGH state.
   */
 
 Expander_PinState_t Expander_Read_Pin(uint8_t PinNumber)
@@ -71,6 +71,10 @@ Expander_PinState_t Expander_Read_Pin(uint8_t PinNumber)
 	uint8_t pData = 0x00U;
 	HAL_I2C_Master_Receive(&hi2c1, DEVICE_ADDRESS_READ, &pData, 1, 100);
 
+	/* Compare existing data and PinNumber.
+	 * Return SET if the result of comparison is 1.
+	 * Return RESET if the result of comparison is 0.
+	 */
 	if(PinNumber & pData)
 	{
 		return EXPANDER_PIN_SET;
@@ -85,16 +89,31 @@ Expander_PinState_t Expander_Read_Pin(uint8_t PinNumber)
 void Expander_Toggle_Pin(uint8_t PinNumber)
 {
 
+	uint8_t pData_write   = 0x00U;
 	uint8_t fake_position = 0x00U;
 	uint8_t last_position = 0x00U;
 
-	for(uint8_t position = 0x00U; MAX_PIN_NUMBER; position++)
+	for(uint8_t position = 0x00U; position <= MAX_PIN_NUMBER; position++)
 	{
-		uint8_t pData_read = 0x00U;
-		HAL_I2C_Master_Receive(&hi2c1, DEVICE_ADDRESS_READ, &pData_read, 1, 100);
 
 		fake_position = (0x1U << position);
-		last_position = ()
+		last_position = (PinNumber & fake_position);
+		if(fake_position == last_position)
+		{
+			uint8_t pData_read = 0x00U;
+			HAL_I2C_Master_Receive(&hi2c1, DEVICE_ADDRESS_READ, &pData_read, 1, 100);
+
+			if(last_position & pData_read)
+			{
+				pData_write = (pData_read) & (~last_position);
+				HAL_I2C_Master_Transmit(&hi2c1, DEVICE_ADDRESS_WRITE, &pData_write, 1, 10);
+			}
+			else
+			{
+				pData_write = (pData_read) | (last_position);
+				HAL_I2C_Master_Transmit(&hi2c1, DEVICE_ADDRESS_WRITE, &pData_write, 1, 10);
+			}
+		}
 
 	}
 
