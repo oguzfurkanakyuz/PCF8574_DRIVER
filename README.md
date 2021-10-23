@@ -22,6 +22,8 @@ The last bit of the byte is the mode selection bit. Read mode selected when the 
 
 The PCF8574 module returns the current pin situations when the 0x4F address is sent. However, the desired pin configuration must be sent in write operation in addition to 0x4E address. Each bidirectional line is controlled with 1-bit of byte. The corresponding bit is set to 1 to turn HIGH the output, and set to 0 to turn LOW the output. The output data configuration is given below.
 
+>Table 2. Output Data Configurations
+
 |   P7  |   P6  |   P5  |   P4  |   P3  |   P2  |   P1  |   P0  | Address |
 |:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-------:|
 |   0   |   0   |   0   |   0   |   0   |   0   |   0   | **1** |   0x01  |
@@ -33,6 +35,7 @@ The PCF8574 module returns the current pin situations when the 0x4F address is s
 |   0   | **1** |   0   |   0   |   0   |   0   |   0   |   0   |   0x40  |
 | **1** |   0   |   0   |   0   |   0   |   0   |   0   |   0   |   0x80  |
 
+
 ## How To Use
 - "PCF8574.h" must be included to the "Inc" file of STM32 project.
 - "PCF8574.c" must be included to the "Src" file of STM32 project.
@@ -41,4 +44,17 @@ The PCF8574 module returns the current pin situations when the 0x4F address is s
 `extern I2C_HandleTypeDef hi2c1;`
 
 ## Functions
+### Expander_Write_Pin()
+Expander_Write_Pin() is a void function that set or reset the output pins. The function gets the desired pins as 8-bit data and gets the desired state with a specific state definitions. 
 
+`void Expander_Write_Pin(uint8_t PinNumber,Expander_PinState_t Expander_State)`
+
+- The PinNumber definitions was assigned as "Px_OUT". "P0_OUT" definition is used to express P0 pin, "P1_OUT1 used for P1 pin, etc.
+
+- "EXPANDER_PIN_SET" and "EXPANDER_PIN_RESET" definitions are used to express pin states. 
+
+**Example :**  Expander_Write_Pin(P4_OUT, EXPANDER_PIN_RESET) => P4 pin turns to the LOW (reset) state.
+
+**Example :**  Expander_Write_Pin(P6_OUT, EXPANDER_PIN_SET)   => P6 pin turns to the HIGH  (set) state.
+
+Expander_Write_Pin() function can handle multi pin operations. Therefore it is possible to set or reset more than pins
