@@ -53,8 +53,31 @@ Expander_Write_Pin() is a void function that set or reset the output pins. The f
 
 - "EXPANDER_PIN_SET" and "EXPANDER_PIN_RESET" definitions are used to express pin states. 
 
-**Example :**  Expander_Write_Pin(P4_OUT, EXPANDER_PIN_RESET) => P4 pin turns to the LOW (reset) state.
+**Example :**  Expander_Write_Pin(P4_OUT, EXPANDER_PIN_RESET) => P4 pin turn to the LOW (reset) state.
 
-**Example :**  Expander_Write_Pin(P6_OUT, EXPANDER_PIN_SET)   => P6 pin turns to the HIGH  (set) state.
+**Example :**  Expander_Write_Pin(P6_OUT, EXPANDER_PIN_SET)   => P6 pin turn to the HIGH  (set) state.
 
-Expander_Write_Pin() function can handle multi pin operations. Therefore it is possible to set or reset more than pins
+Expander_Write_Pin() function can handle multi-pin operations. Therefore it is possible to set or reset more than pins.
+
+**Example :**  Expander_Write_Pin(P0_OUT | P1_OUT, EXPANDER_PIN_RESET) => P0 and P1 pin turns to the LOW (reset) state.
+
+**Example :**  Expander_Write_Pin(P0_OUT | P3_OUT | P7_OUT, EXPANDER_PIN_SET)   => P0, P3, and P7 pin turns to the HIGH  (set) state.
+
+### Expander_Toggle_Pin()
+Expander_Toggle_Pin() is a void function that turns the current state to the reverse state. The function gets the desired pins as 8-bit data, the function can handle multi-pin operations also.
+
+`void Expander_Toggle_Pin(uint8_t PinNumber)`
+
+**Example :**  Expander_Toggle_Pin(P0_OUT) => P0 pin turn to reverse state.
+
+**Example :**  Expander_Toggle_Pin(P0_OUT | P3_OUT)   => P0, and P3 pin turns to reverse state.
+
+### Expander_Read_Data()
+Expander_Read_Data() is function that return the current data of output pins. The function does not take any input data and returns current data as 8-bit data.
+
+`uint8_t Expander_Read_Data()`
+
+### Expander_Read_Pin()
+Expander_ReadPin() is funtion that return the current state of desired pin, funciton can works for only 1-bit. The fuction gets desired pin as 8-bit data, and returns the current state as specific state definitions. The funciton returns 'EXPANDER_PIN_SET' if the pin is HIGH, returns 'EXPANDER_PIN_RESET' if the pin is LOW.
+
+`Expander_PinState_t Expander_Read_Pin(uint8_t PinNumber)`
